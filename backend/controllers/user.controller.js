@@ -13,8 +13,9 @@ export const handleSignup = async (req, res) => {
             name,
             country
         });
-
         await user.save();
+
+        await generateTokenAndSetCookie(user, res);
         return res.status(201).json({ message: "User created successfully", user: { name: user.name, email: user.email, country: user.country } });
     } catch (error) {
         return res.status(500).send("Error creating user");

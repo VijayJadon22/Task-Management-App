@@ -35,7 +35,7 @@ export const deleteProject = async (req, res) => {
 
         await Task.deleteMany({ projectId: id });
         await Project.findOneAndDelete(id);
-        return res.status(200).json({ message: "Project deleted successfully" });
+        return res.status(200).json({ message: "Project deleted successfully", id });
     } catch (error) {
         return res.status(500).json({ message: "Error deleteing project" });
     }
