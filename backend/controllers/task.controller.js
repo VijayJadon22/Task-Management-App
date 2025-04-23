@@ -19,9 +19,10 @@ export const createTask = async (req, res) => {
 }
 export const readTasks = async (req, res) => {
     try {
-
+        const tasks = await Task.find({ userId: req.user._id });
+        return res.status(200).send(tasks);
     } catch (error) {
-
+        return res.status(500).json({ message: "Error fetching tasks" });
     }
 }
 export const updateTask = async (req, res) => {
