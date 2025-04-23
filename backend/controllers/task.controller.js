@@ -1,6 +1,5 @@
 import Task from "../models/task.schema.js";
 
-
 export const createTask = async (req, res) => {
     try {
         const { title, description, completionDate } = req.body;
