@@ -4,6 +4,9 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 import connectToDB from "./utils/connectToDB.js";
+import userRoutes from "./routes/user.routes.js";
+import taskRoutes from "./routes/task.routes.js";
+import projectRoutes from "./routes/project.routes.js";
 
 dotenv.config();
 
@@ -14,10 +17,9 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-
-app.get("/", (req, res) => {
-    res.send("Welcome hello");
-});
+app.use("/user", userRoutes);
+app.use("/task", taskRoutes);
+app.use("/project", projectRoutes);
 
 
 app.listen(PORT, () => {
