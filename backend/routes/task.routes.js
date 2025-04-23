@@ -4,9 +4,9 @@ import { createTask, deleteTask, readTasks, updateTask } from "../controllers/ta
 
 const router = express.Router();
 
-router.post("/", authMiddleware, createTask);
-router.get("/", authMiddleware, readTasks);
-router.put("/:id", authMiddleware, updateTask);
-router.delete("/:id", authMiddleware, deleteTask);
+router.post("/:projectId", authMiddleware, createTask);
+router.get("/:projectId", authMiddleware, readTasks);
+router.put("/:projectId/:taskId", authMiddleware, updateTask);
+router.delete("/:projectId/:taskId", authMiddleware, deleteTask);
 
 export default router;
