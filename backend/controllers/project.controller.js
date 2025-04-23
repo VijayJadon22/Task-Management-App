@@ -18,9 +18,10 @@ export const createProject = async (req, res) => {
 }
 export const getAllProjects = async (req, res) => {
     try {
-        
+        const projects = await Project.find({ userId: req.user._id }).populate("tasks");
+        return res.status(200).send(projects);
     } catch (error) {
-        
+        return res.status(500).json({ message: "Error fetching project" });
     }
 }
 export const deleteProject = async (req, res) => {
