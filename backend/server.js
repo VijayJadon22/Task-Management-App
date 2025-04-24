@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 app.use(cors());
 
 
-app.use("/user", userRoutes);
+app.use("/auth", userRoutes);
 app.use("/task", taskRoutes);
 app.use("/project", projectRoutes);
 
