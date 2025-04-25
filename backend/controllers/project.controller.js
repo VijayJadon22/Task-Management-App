@@ -4,6 +4,7 @@ import Task from "../models/task.schema.js";
 export const createProject = async (req, res) => {
     try {
         const { name, description } = req.body;
+        console.log("name desc", name, description);
         const existingProjects = await Project.find({ userId: req.user._id });
         if (existingProjects.length >= 4) return res.status(403).json({ message: "Project limit reached" });
 
@@ -29,7 +30,7 @@ export const deleteProject = async (req, res) => {
     try {
         const { id } = req.params;
         const project = await Project.findById(id);
-        if (!project || project.userId.toString() !== req.user._id) {
+        if (!project || project.userId.toString() !== req.user._id.toString()) {
             return res.status(403).send("You are not authorized to delete this project");
         }
 
