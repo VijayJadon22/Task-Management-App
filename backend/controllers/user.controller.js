@@ -16,7 +16,7 @@ export const handleSignup = async (req, res) => {
         await user.save();
 
         await generateTokenAndSetCookie(user, res);
-        return res.status(201).json({ message: "User created successfully", user: { name: user.name, email: user.email, country: user.country } });
+        return res.status(201).json({ message: "User created successfully", user: { _id: user._id, name: user.name, email: user.email, country: user.country } });
     } catch (error) {
         return res.status(500).send("Error creating user");
     }
@@ -31,7 +31,7 @@ export const handleLogin = async (req, res) => {
         if (!isValid) return res.status(404).json({ message: "Inavlid Credentials" });
 
         await generateTokenAndSetCookie(user, res);
-        return res.status(200).json({ message: "Login successfull", user: { name: user.name, email: user.email, country: user.country } });
+        return res.status(200).json({ message: "Login successfull", user: { _id: user._id, name: user.name, email: user.email, country: user.country } });
     } catch (error) {
         return res.status(500).json({ message: "Error logging in user try again later" });
     }
@@ -41,6 +41,14 @@ export const handleLogout = async (req, res) => {
     try {
         res.clearCookie("token");
         return res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        return res.status(500).json({ message: "Internal server error" });
+    }
+}
+
+export const getUserProfile = async (req, res) => {
+    try {
+        res.send(req.user);
     } catch (error) {
         return res.status(500).json({ message: "Internal server error" });
     }
