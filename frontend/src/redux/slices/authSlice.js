@@ -11,9 +11,15 @@ export const signup = createAsyncThunk("auth/signup", async (formData) => {
     return response.data;
 });
 export const logout = createAsyncThunk("auth/logout", async (formData) => {
-    const response = await axios.post("/auth/signup", formData);
+    const response = await axios.post("/auth/logout", formData);
     return response.data;
 });
+
+export const checkAuth = createAsyncThunk("auth/checkAuth", async () => {
+    const response = await axios.get("/auth/getProfile");
+    return response.data;
+
+})
 
 
 const authSlice = createSlice({
@@ -73,6 +79,22 @@ const authSlice = createSlice({
             })
             .addCase(logout.rejected, (state, action) => {
                 state.loading = false;
+                state.error = action.error.message;
+            })
+
+            //checkAuth
+            .addCase(checkAuth.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(checkAuth.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+                state.isAuthenticated = true;
+                state.error = null;
+            })
+            .addCase(checkAuth.rejected, (state, action) => {
+                state.loading = false;
+                state.user = null;
                 state.error = action.error.message;
             })
     }

@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../lib/axios.js";
 
 export const fetchProjects = createAsyncThunk("project/fetchProjects", async () => {
-    const response = await axios.get("http://localhost:5000/project");
+    const response = await axios.get("/project");
     return response.data;
 });
-export const createProject = createAsyncThunk("project/createProject", async (data) => {
-    const response = await axios.post("http://localhost:5000/project", data);
+export const createProject = createAsyncThunk("project/createProject", async (formData) => {
+    const response = await axios.post("/project", formData);
     return response.data;
 });
-export const deleteProject = createAsyncThunk("project/deleteroject", async (projectId) => {
-    const response = await axios.delete(`http://localhost:5000/project/${projectId}`);
+export const deleteProject = createAsyncThunk("project/deleteroject", async (id) => {
+    const response = await axios.delete(`/project/${id}`);
     return response.data;
 });
 

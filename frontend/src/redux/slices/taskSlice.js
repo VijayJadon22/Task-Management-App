@@ -1,21 +1,22 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../lib/axios.js"
 
 export const fetchTasks = createAsyncThunk("task/fetchTasks", async (projectId) => {
-    const response = await axios.get(`http://localhost:5000/task/${projectId}`);
+    const response = await axios.get(`/task/${projectId}`);
     return response.data;
 });
-export const createTask = createAsyncThunk("task/createTask", async ({ data, projectId }) => {
-    const response = await axios.post(`http://localhost:5000/task/${projectId}`, data);
+export const createTask = createAsyncThunk("task/createTask", async ({ formData, projectId }) => {
+    const response = await axios.post(`/task/${projectId}`, formData);
     return response.data;
 });
-export const updateTask = createAsyncThunk("task/updateTask", async ({ data, projectId, taskId }) => {
-    const response = await axios.post(`http://localhost:5000/task/${projectId}/${taskId}`, data);
+export const updateTask = createAsyncThunk("task/updateTask", async ({ formData, projectId, taskId }) => {
+    const response = await axios.put(`/task/${projectId}/${taskId}`, formData);
+    console.log("response.data", response.data);
     return response.data;
 });
 export const deleteTask = createAsyncThunk("task/deleteTask", async ({ projectId, taskId }) => {
-    await axios.post(`http://localhost:5000/task/${projectId}/${taskId}`);
+    await axios.delete(`/task/${projectId}/${taskId}`);
     return taskId;
 });
 
@@ -52,14 +53,16 @@ const taskSlice = createSlice({
             })
             //update task
             .addCase(updateTask.fulfilled, (state, action) => {
-                state.tasks = state.tasks.map((task) => {
-                    task.id === action.payload._id ? action.payload : task;
-                })
+                console.log("Updated Task:", action.payload); // Debug the payload
+                state.tasks = state.tasks.map((task) =>
+                    task._id === action.payload._id ? action.payload : task
+                );
             })
+            
             //delete task
             .addCase(deleteTask.fulfilled, (state, action) => {
                 state.tasks = state.tasks.filter((task) => task._id !== action.payload);
-            })
+            })            
 
     }
 });
