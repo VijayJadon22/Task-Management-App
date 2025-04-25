@@ -1,17 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
+import axios from "../../lib/axios.js";
 
 export const login = createAsyncThunk("auth/login", async (formData) => {
-    const response = await axios.post("http://localhost:5000/auth/login", formData);
+    const response = await axios.post("/auth/login", formData);
     return response.data;
 });
 export const signup = createAsyncThunk("auth/signup", async (formData) => {
-    const response = await axios.post("http://localhost:5000/auth/signup", formData);
+    const response = await axios.post("/auth/signup", formData);
     return response.data;
 });
 export const logout = createAsyncThunk("auth/logout", async (formData) => {
-    const response = await axios.post("http://localhost:5000/auth/signup", formData);
+    const response = await axios.post("/auth/signup", formData);
     return response.data;
 });
 
