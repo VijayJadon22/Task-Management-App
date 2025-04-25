@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { createProject } from "../redux/slices/projectSlice.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const CreateProject = () => {
   const [formData, setFormData] = useState({ name: "", description: "" });
+  const { projects } = useSelector((state) => state.project);
   const dispatch = useDispatch();
   const handleInputChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -15,8 +16,14 @@ const CreateProject = () => {
       toast.error("Please fill all fields", { id: "missingFields" });
       return;
     }
+    if (projects.length == 4) {
+      toast.error("Project Limit reached Max:4", { id: "project-created" });
+      return;
+    }
     console.log(formData);
     dispatch(createProject(formData));
+    setFormData({ name: "", description: "" });
+    toast.success("Project created successfully", { id: "project-created" });
     // dispatch((formData));
   };
   return (
