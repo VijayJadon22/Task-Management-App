@@ -24,7 +24,6 @@ const CreateProject = () => {
     dispatch(createProject(formData));
     setFormData({ name: "", description: "" });
     toast.success("Project created successfully", { id: "project-created" });
-    // dispatch((formData));
   };
   return (
     <div className="p-4 flex flex-col items-center">
