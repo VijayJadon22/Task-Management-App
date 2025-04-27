@@ -4,7 +4,6 @@ import Task from "../models/task.schema.js";
 export const createProject = async (req, res) => {
     try {
         const { name, description } = req.body;
-        console.log("name desc", name, description);
         const existingProjects = await Project.find({ userId: req.user._id });
         if (existingProjects.length >= 4) return res.status(403).json({ message: "Project limit reached" });
 
